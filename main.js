@@ -35,6 +35,8 @@ const startGame = () => {
 
   document.addEventListener("keydown", keyListener);
   document.addEventListener("keyup", keyListener);
+
+  document.getElementById("player").play();
 };
 
 const play = () => {
