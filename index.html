@@ -16,12 +16,19 @@
         border: solid 0.2em #fff;
         height: 90vh;
       }
+      #player {
+          display: none;
+      }
     </style>
   </head>
   <body>
+    <input id="start" type="button" value="Start Game" onclick="startGame();"></input>
     <div id="score"></div>
     <canvas id="tetris" width="240" height="400"></canvas>
-    <!-- <audio controls></audio> -->
+    <div>
+        <input type="button" id="play" value="Play" onclick="play()">
+        <audio src="https://xotourllif3.s3-us-west-1.amazonaws.com/XO_Tour_Llif3.mp3" controls id="player""></audio>
+    </div>
     <script src="arena.js"></script>
     <script src="player.js"></script>
     <script src="tetris.js"></script>

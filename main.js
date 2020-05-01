@@ -1,33 +1,46 @@
-const score = document.getElementById("score");
-const canvas = document.getElementById("tetris");
+const startGame = () => {
+  document.getElementById("start").style.display = "none";
+  const score = document.getElementById("score");
+  const canvas = document.getElementById("tetris");
+  const tetris = new Tetris(score, canvas);
 
-const tetris = new Tetris(score, canvas);
-
-const keyListener = (event) => {
-  [[37, 38, 39, 40]].forEach((key) => {
-    const player = tetris.player;
-    if (event.type === "keydown") {
-      if (event.keyCode === key[0]) {
-        player.move(-1);
-      } else if (event.keyCode === key[1]) {
-        player.rotate(-1);
-      } else if (event.keyCode === key[2]) {
-        player.move(+1);
+  const keyListener = (event) => {
+    [[37, 38, 39, 40]].forEach((key) => {
+      const player = tetris.player;
+      if (player.gameOver) {
+        return;
       }
-    }
-
-    if (event.keyCode === key[3]) {
       if (event.type === "keydown") {
-        if (player.dropInterval !== player.DROP_FAST) {
-          player.drop();
-          player.dropInterval = player.DROP_FAST;
+        if (event.keyCode === key[0]) {
+          player.move(-1);
+        } else if (event.keyCode === key[1]) {
+          player.rotate(-1);
+        } else if (event.keyCode === key[2]) {
+          player.move(+1);
         }
-      } else {
-        player.dropInterval = player.DROP_SLOW;
       }
-    }
-  });
+
+      if (event.keyCode === key[3]) {
+        if (event.type === "keydown") {
+          if (player.dropInterval !== player.DROP_FAST) {
+            player.drop();
+            player.dropInterval = player.DROP_FAST;
+          }
+        } else {
+          player.dropInterval = player.DROP_SLOW;
+        }
+      }
+    });
+  };
+
+  document.addEventListener("keydown", keyListener);
+  document.addEventListener("keyup", keyListener);
 };
 
-document.addEventListener("keydown", keyListener);
-document.addEventListener("keyup", keyListener);
+const play = () => {
+  document.getElementById("player").play();
+};
+
+const showRestartOption = () => {
+  document.getElementById("start").style.display = "inline";
+};

@@ -11,6 +11,8 @@ class Player {
     this.matrix = null;
     this.score = 0;
 
+    this.gameOver = false;
+
     this.reset();
   }
 
@@ -22,6 +24,9 @@ class Player {
   }
 
   rotate(dir) {
+    if (this.gameOver) {
+      return;
+    }
     const pos = this.pos.x;
     let offset = 1;
     this._rotateMatrix(this.matrix, dir);
@@ -51,9 +56,12 @@ class Player {
   }
 
   drop() {
+    if (this.gameOver) {
+      return;
+    }
     this.pos.y++;
+
     if (this.arena.collide(this)) {
-      console.log("drop this: ", this);
       this.pos.y--;
       this.arena.merge(this);
       this.reset();
@@ -72,10 +80,11 @@ class Player {
       ((this.arena.matrix[0].length / 2) | 0) -
       ((this.matrix[0].length / 2) | 0);
     if (this.arena.collide(this)) {
-      // new game logic here
-      this.arena.clear();
-      this.score = 0;
-      this.tetris.updateScore(0);
+      //   this.arena.clear();
+      //   this.score = 0;
+      //   this.tetris.updateScore(0);
+      this.gameOver = true;
+      //   showRestartOption();
     }
   }
 
